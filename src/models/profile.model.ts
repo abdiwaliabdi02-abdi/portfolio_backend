@@ -1,11 +1,86 @@
-import { DataTypes, Model } from "sequelize";
+import { DataTypes, Model, Optional } from "sequelize";
 import { sequelize } from "../config/database";
 
-export class Profile extends Model {}
+/* ---------- Type Definitions ---------- */
+
+interface ProfileAttributes {
+  id: number;
+  name: string;
+  bio?: string;
+  location?: string;
+  nationality?: string;
+  availability?: string;
+  dateOfBirth?: Date;
+  email?: string;
+  phone?: string;
+  address?: string;
+  github?: string;
+  twitter?: string;
+  linkedin?: string;
+  expectedSalary?: number;
+  ownACar?: boolean;
+  haveDrivingLicense?: boolean;
+  noticePeriod?: string;
+  immigrationStatus?: string;
+  referees?: string;
+  willingToRelocate?: boolean;
+  languages?: string;
+  skills?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+/* Fields optional when creating */
+type ProfileCreationAttributes = Optional<ProfileAttributes, "id">;
+
+/* ---------- Model Class ---------- */
+
+export class Profile
+  extends Model<ProfileAttributes, ProfileCreationAttributes>
+  implements ProfileAttributes
+{
+  public id!: number;
+  public name!: string;
+  public bio?: string;
+  public location?: string;
+  public nationality?: string;
+  public availability?: string;
+  public dateOfBirth?: Date;
+  public email?: string;
+  public phone?: string;
+  public address?: string;
+  public github?: string;
+  public twitter?: string;
+  public linkedin?: string;
+  public expectedSalary?: number;
+  public ownACar?: boolean;
+  public haveDrivingLicense?: boolean;
+  public noticePeriod?: string;
+  public immigrationStatus?: string;
+  public referees?: string;
+  public willingToRelocate?: boolean;
+  public languages?: string;
+  public skills?: string;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+/* ---------- Init ---------- */
 
 Profile.init(
   {
-    name: { type: DataTypes.STRING, allowNull: false },
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+
     bio: DataTypes.TEXT,
     location: DataTypes.STRING,
     nationality: DataTypes.STRING,
@@ -30,5 +105,7 @@ Profile.init(
   {
     sequelize,
     modelName: "Profile",
+    tableName: "profiles", // 🔥 CRITICAL FIX
+    timestamps: true, // 🔥 matches createdAt / updatedAt
   },
 );

@@ -17,8 +17,14 @@ export const getProfiles = async (_: Request, res: Response) => {
 
 export const getProfile = async (req: Request, res: Response) => {
   const profile = await Profile.findByPk(Number(req.params.id));
+
+  if (!profile) {
+    return res.status(404).json({ message: "Profile not found" });
+  }
+
   res.json(profile);
 };
+
 
 export const updateProfile = async (req: Request, res: Response) => {
   const profile = await Profile.findByPk(Number(req.params.id));
