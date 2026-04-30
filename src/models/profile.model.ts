@@ -105,7 +105,8 @@ Profile.init(
   {
     sequelize,
     modelName: "Profile",
-    tableName: "profiles", // 🔥 CRITICAL FIX
+    tableName: "profiles",
+    freezeTableName: true, // 🔥 CRITICAL FIX
     timestamps: true, // 🔥 matches createdAt / updatedAt
   },
 );
