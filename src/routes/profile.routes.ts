@@ -1,4 +1,5 @@
 import { Router } from "express";
+
 import {
   createProfile,
   getProfiles,
@@ -40,14 +41,23 @@ router.post("/", createProfile);
  *     responses:
  *       200:
  *         description: List of profiles
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Profile'
  */
 router.get("/", getProfiles);
+
+/**
+ * @swagger
+ * /api/profiles/me:
+ *   get:
+ *     summary: Get current portfolio profile
+ *     description: Retrieve the main portfolio profile
+ *     tags: [Profiles]
+ *     responses:
+ *       200:
+ *         description: Profile found
+ *       404:
+ *         description: Profile not found
+ */
+router.get("/me", getProfile);
 
 /**
  * @swagger
@@ -66,10 +76,6 @@ router.get("/", getProfiles);
  *     responses:
  *       200:
  *         description: Profile found
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Profile'
  *       404:
  *         description: Profile not found
  */
